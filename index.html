@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo - 2010 Edition</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#76b800">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
     <style>
         body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #4b4b4b; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
         .container { width: 960px; max-width: 95%; margin: 0 auto; flex: 1; }
@@ -39,6 +42,8 @@
     </style>
 </head>
 <body>
+<button id="installBtn" style="display:none; position:fixed; top:15px; left:15px; background:#76b800; color:#fff; border:none; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer; z-index:9999; box-shadow:0 2px 5px rgba(0,0,0,0.2);">📲 Install App</button>
+
 <div class="container">
     <div class="header">
         <input type="text" placeholder="Username" id="username">
@@ -76,49 +81,17 @@
 <div class="footer">© 2010 Carnegie Mellon University</div>
 <script>
 const languages = [
-    { name: "Spanish",
-      easy: [{q:"Hola",a:"hello"},{q:"Agua",a:"water"},{q:"Pan",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}],
-      med: [{q:"Quiero beber agua fría",a:"i want to drink cold water"},{q:"El gato negro duerme en la casa",a:"the black cat sleeps in the house"},{q:"Nosotros leemos libros interesantes",a:"we read interesting books"}],
-      hard: [{q:"Translate to Spanish: She always speaks fast",a:"ella siempre habla rapido"},{q:"Translate to Spanish: We need more time today",a:"necesitamos mas tiempo hoy"}] },
-    { name: "French",
-      easy: [{q:"Bonjour",a:"hello"},{q:"Eau",a:"water"},{q:"Pain",a:"bread"},{q:"Chat",a:"cat"},{q:"Maison",a:"house"}],
-      med: [{q:"Je veux boire de l'eau froide",a:"i want to drink cold water"},{q:"Le chat noir dort dans la maison",a:"the black cat sleeps in the house"},{q:"Nous lisons des livres intéressants",a:"we read interesting books"}],
-      hard: [{q:"Translate to French: She always speaks fast",a:"elle parle toujours vite"},{q:"Translate to French: We need more time today",a:"nous avons besoin de plus de temps aujourd'hui"}] },
-    { name: "German",
-      easy: [{q:"Hallo",a:"hello"},{q:"Wasser",a:"water"},{q:"Brot",a:"bread"},{q:"Katze",a:"cat"},{q:"Haus",a:"house"}],
-      med: [{q:"Ich möchte kaltes Wasser trinken",a:"i want to drink cold water"},{q:"Die schwarze Katze schläft im Haus",a:"the black cat sleeps in the house"},{q:"Wir lesen interessante Bücher",a:"we read interesting books"}],
-      hard: [{q:"Translate to German: She always speaks fast",a:"sie spricht immer schnell"},{q:"Translate to German: We need more time today",a:"wir brauchen heute mehr zeit"}] },
-    { name: "Italian",
-      easy: [{q:"Ciao",a:"hello"},{q:"Acqua",a:"water"},{q:"Pane",a:"bread"},{q:"Gatto",a:"cat"},{q:"Casa",a:"house"}],
-      med: [{q:"Voglio bere acqua fredda",a:"i want to drink cold water"},{q:"Il gatto nero dorme in casa",a:"the black cat sleeps in the house"},{q:"Leggiamo libri interessanti",a:"we read interesting books"}],
-      hard: [{q:"Translate to Italian: She always speaks fast",a:"lei parla sempre velocemente"},{q:"Translate to Italian: We need more time today",a:"abbiamo bisogno di piu tempo oggi"}] },
-    { name: "Portuguese",
-      easy: [{q:"Olá",a:"hello"},{q:"Água",a:"water"},{q:"Pão",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}],
-      med: [{q:"Eu quero beber água fria",a:"i want to drink cold water"},{q:"O gato preto dorme na casa",a:"the black cat sleeps in the house"},{q:"Nós lemos livros interessantes",a:"we read interesting books"}],
-      hard: [{q:"Translate to Portuguese: She always speaks fast",a:"ela sempre fala rapido"},{q:"Translate to Portuguese: We need more time today",a:"precisamos de mais tempo hoje"}] }
+    { name: "Spanish", easy: [{q:"Hola",a:"hello"},{q:"Agua",a:"water"},{q:"Pan",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}], med: [{q:"Quiero beber agua fría",a:"i want to drink cold water"},{q:"El gato negro duerme en la casa",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Spanish: She always speaks fast",a:"ella siempre habla rapido"},{q:"Translate to Spanish: We need more time today",a:"necesitamos mas tiempo hoy"}] },
+    { name: "French", easy: [{q:"Bonjour",a:"hello"},{q:"Eau",a:"water"},{q:"Pain",a:"bread"},{q:"Chat",a:"cat"},{q:"Maison",a:"house"}], med: [{q:"Je veux boire de l'eau froide",a:"i want to drink cold water"},{q:"Le chat noir dort dans la maison",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to French: She always speaks fast",a:"elle parle toujours vite"},{q:"Translate to French: We need more time today",a:"nous avons besoin de plus de temps aujourd'hui"}] },
+    { name: "German", easy: [{q:"Hallo",a:"hello"},{q:"Wasser",a:"water"},{q:"Brot",a:"bread"},{q:"Katze",a:"cat"},{q:"Haus",a:"house"}], med: [{q:"Ich möchte kaltes Wasser trinken",a:"i want to drink cold water"},{q:"Die schwarze Katze schläft im Haus",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to German: She always speaks fast",a:"sie spricht immer schnell"},{q:"Translate to German: We need more time today",a:"wir brauchen heute mehr zeit"}] },
+    { name: "Italian", easy: [{q:"Ciao",a:"hello"},{q:"Acqua",a:"water"},{q:"Pane",a:"bread"},{q:"Gatto",a:"cat"},{q:"Casa",a:"house"}], med: [{q:"Voglio bere acqua fredda",a:"i want to drink cold water"},{q:"Il gatto nero dorme in casa",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Italian: She always speaks fast",a:"lei parla sempre velocemente"},{q:"Translate to Italian: We need more time today",a:"abbiamo bisogno di piu tempo oggi"}] },
+    { name: "Portuguese", easy: [{q:"Olá",a:"hello"},{q:"Água",a:"water"},{q:"Pão",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}], med: [{q:"Eu quero beber água fria",a:"i want to drink cold water"},{q:"O gato preto dorme na casa",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Portuguese: She always speaks fast",a:"ela sempre fala rapido"},{q:"Translate to Portuguese: We need more time today",a:"precisamos de mais tempo hoje"}] },
+    { name: "Greek", easy: [{q:"Γεια σου",a:"hello"},{q:"Νερό",a:"water"},{q:"Ψωμί",a:"bread"},{q:"Γάτα",a:"cat"},{q:"Σπίτι",a:"house"}], med: [{q:"Θέλω να πιω κρύο νερό",a:"i want to drink cold water"},{q:"Η μαύρη γάτα κοιμάται στο σπίτι",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Greek: She always speaks fast",a:"αυτη μιλαει παντα γρηγορα"},{q:"Translate to Greek: We need more time today",a:"χρειαζομαστε περισσοτερο χρονο σημερα"}] },
+    { name: "Japanese", easy: [{q:"こんにちは (Konnichiwa)",a:"hello"},{q:"水 (Mizu)",a:"water"},{q:"パン (Pan)",a:"bread"},{q:"猫 (Neko)",a:"cat"},{q:"家 (Ie)",a:"house"}], med: [{q:"冷たい水が飲みたいです (Tsumetai mizu ga nomitai desu)",a:"i want to drink cold water"},{q:"黒い猫は家で寝ています (Kuroi neko wa ie de neteimasu)",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Japanese (Romaji): Thank you very much",a:"arigatou gozaimasu"},{q:"Translate to Japanese (Romaji): Good morning",a:"ohayou gozaimasu"}] },
+    { name: "Russian", easy: [{q:"Привет (Privet)",a:"hello"},{q:"Вода (Voda)",a:"water"},{q:"Хлеб (Khleb)",a:"bread"},{q:"Кот (Kot)",a:"cat"},{q:"Дом (Dom)",a:"house"}], med: [{q:"Я хочу пить холодную воду (Ya khochu pit kholodnuyu vodu)",a:"i want to drink cold water"},{q:"Чёрный кот спит в доме (Chyorny kot spit v dome)",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Russian (Latin): Thank you very much",a:"bolshoye spasibo"},{q:"Translate to Russian (Latin): Good morning",a:"dobroye utro"}] },
+    { name: "Korean", easy: [{q:"안녕하세요 (Annyeonghaseyo)",a:"hello"},{q:"물 (Mul)",a:"water"},{q:"빵 (Ppang)",a:"bread"},{q:"고양이 (Goyangi)",a:"cat"},{q:"집 (Jip)",a:"house"}], med: [{q:"차가운 물을 마시고 싶어요 (Chagaun mureul masigo sipeoyo)",a:"i want to drink cold water"},{q:"검은 고양이가 집에서 잡니다 (Geomeun goyangiga jibeseo jamnida)",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Korean (Romanized): Thank you",a:"gamsahamnida"},{q:"Translate to Korean (Romanized): Good night",a:"jal jayo"}] },
+    { name: "Dutch", easy: [{q:"Hallo",a:"hello"},{q:"Water",a:"water"},{q:"Brood",a:"bread"},{q:"Kat",a:"cat"},{q:"Huis",a:"house"}], med: [{q:"Ik wil koud water drinken",a:"i want to drink cold water"},{q:"De zwarte kat slaapt in het huis",a:"the black cat sleeps in the house"}], hard: [{q:"Translate to Dutch: She always speaks fast",a:"zij praat altijd snel"},{q:"Translate to Dutch: We need more time today",a:"wij hebben vandaag meer tijd nodig"}] }
 ];
-    languages.push(
-    { name: "Greek",
-      easy: [{q:"Γεια σου",a:"hello"},{q:"Νερό",a:"water"},{q:"Ψωμί",a:"bread"},{q:"Γάτα",a:"cat"},{q:"Σπίτι",a:"house"}],
-      med: [{q:"Θέλω να πιω κρύο νερό",a:"i want to drink cold water"},{q:"Η μαύρη γάτα κοιμάται στο σπίτι",a:"the black cat sleeps in the house"}],
-      hard: [{q:"Translate to Greek: She always speaks fast",a:"αυτη μιλαει παντα γρηγορα"},{q:"Translate to Greek: We need more time today",a:"χρειαζομαστε περισσοτερο χρονο σημερα"}] },
-    { name: "Japanese",
-      easy: [{q:"こんにちは (Konnichiwa)",a:"hello"},{q:"水 (Mizu)",a:"water"},{q:"パン (Pan)",a:"bread"},{q:"猫 (Neko)",a:"cat"},{q:"家 (Ie)",a:"house"}],
-      med: [{q:"冷たい水が飲みたいです (Tsumetai mizu ga nomitai desu)",a:"i want to drink cold water"},{q:"黒い猫は家で寝ています (Kuroi neko wa ie de neteimasu)",a:"the black cat sleeps in the house"}],
-      hard: [{q:"Translate to Japanese (Romaji): Thank you very much",a:"arigatou gozaimasu"},{q:"Translate to Japanese (Romaji): Good morning",a:"ohayou gozaimasu"}] },
-    { name: "Russian",
-      easy: [{q:"Привет (Privet)",a:"hello"},{q:"Вода (Voda)",a:"water"},{q:"Хлеб (Khleb)",a:"bread"},{q:"Кот (Kot)",a:"cat"},{q:"Дом (Dom)",a:"house"}],
-      med: [{q:"Я хочу пить холодную воду (Ya khochu pit kholodnuyu vodu)",a:"i want to drink cold water"},{q:"Чёрный кот спит в доме (Chyorny kot spit v dome)",a:"the black cat sleeps in the house"}],
-      hard: [{q:"Translate to Russian (Latin): Thank you very much",a:"bolshoye spasibo"},{q:"Translate to Russian (Latin): Good morning",a:"dobroye utro"}] },
-    { name: "Korean",
-      easy: [{q:"안녕하세요 (Annyeonghaseyo)",a:"hello"},{q:"물 (Mul)",a:"water"},{q:"빵 (Ppang)",a:"bread"},{q:"고양이 (Goyangi)",a:"cat"},{q:"집 (Jip)",a:"house"}],
-      med: [{q:"차가운 물을 마시고 싶어요 (Chagaun mureul masigo sipeoyo)",a:"i want to drink cold water"},{q:"검은 고양이가 집에서 잡니다 (Geomeun goyangiga jibeseo jamnida)",a:"the black cat sleeps in the house"}],
-      hard: [{q:"Translate to Korean (Romanized): Thank you",a:"gamsahamnida"},{q:"Translate to Korean (Romanized): Good night",a:"jal jayo"}] },
-    { name: "Dutch",
-      easy: [{q:"Hallo",a:"hello"},{q:"Water",a:"water"},{q:"Brood",a:"bread"},{q:"Kat",a:"cat"},{q:"Huis",a:"house"}],
-      med: [{q:"Ik wil koud water drinken",a:"i want to drink cold water"},{q:"De zwarte kat slaapt in het huis",a:"the black cat sleeps in the house"}],
-      hard: [{q:"Translate to Dutch: She always speaks fast",a:"zij praat altijd snel"},{q:"Translate to Dutch: We need more time today",a:"wij hebben vandaag meer tijd nodig"}] }
-);
 
 let selectedLang = 0, selectedLevel = 1, completed = {}, currentQ = null;
 const langGrid = document.getElementById("languages-grid");
@@ -178,9 +151,7 @@ function startLevel(lvl) {
     document.getElementById("feedback").innerText = "";
 }
 function backToLevels() { selectLanguage(selectedLang); }
-function normalize(str) {
-    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,!?']/g, "").trim();
-}
+function normalize(str) { return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,!?']/g, "").trim(); }
 function checkAnswer() {
     const l = languages[selectedLang];
     const ans = normalize(document.getElementById("user-answer").value);
@@ -194,6 +165,18 @@ function checkAnswer() {
 }
 function nextLevel() { if (selectedLevel < 200) startLevel(selectedLevel + 1); else backToLevels(); }
 function handleLogin() { alert("Welcome to Duolingo Closed Beta (2010), " + (document.getElementById("username").value || "Guest") + "!"); }
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+}
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const btn = document.getElementById('installBtn');
+    btn.style.display = 'block';
+    btn.onclick = () => { deferredPrompt.prompt(); deferredPrompt = null; btn.style.display = 'none'; };
+});
 </script>
 </body>
 </html>
