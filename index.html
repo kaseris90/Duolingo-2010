@@ -5,551 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo - 2010 Edition</title>
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background-color: #ffffff;
-            color: #4b4b4b;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 960px;
-            max-width: 95%;
-            margin: 0 auto;
-            flex: 1;
-            position: relative;
-        }
-
-        .header {
-            display: flex;
-            justify-content: flex-end;
-            padding-top: 30px;
-            gap: 10px;
-        }
-
-        .header input {
-            padding: 8px 12px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            font-size: 14px;
-            width: 140px;
-            color: #555;
-        }
-
-        .btn-green {
-            background: linear-gradient(to bottom, #92d41e 0%, #76b800 100%);
-            border: 1px solid #659e00;
-            border-radius: 5px;
-            color: white;
-            font-weight: bold;
-            font-size: 14px;
-            padding: 8px 22px;
-            cursor: pointer;
-            text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-        }
-
-        .btn-green:hover {
-            background: linear-gradient(to bottom, #9ee028 0%, #80c406 100%);
-        }
-
-        .main-content {
-            margin-top: 40px;
-            padding-left: 20px;
-        }
-
-        .brand-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .tagline {
-            font-size: 20px;
-            color: #555555;
-            margin-top: 10px;
-        }
-
-        .beta-text {
-            margin-top: 5px;
-            font-size: 19px;
-            line-height: 1.4;
-            color: #4b4b4b;
-        }
-
-        .beta-text a {
-            color: #4b75b3;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .beta-text a:hover {
-            text-decoration: underline;
-        }
-
-        .learn-now-wrapper {
-            margin-top: 30px;
-        }
-
-        .btn-learn-now {
-            font-size: 18px;
-            padding: 12px 32px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        #language-section {
-            display: none;
-            margin-top: 35px;
-            border-top: 1px solid #eeeeee;
-            padding-top: 25px;
-            padding-bottom: 40px;
-        }
-
-        #language-section h2 {
-            font-size: 20px;
-            color: #4b4b4b;
-            margin-bottom: 15px;
-        }
-
-        .languages-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 12px;
-        }
-
-        .lang-card {
-            border: 1px solid #dddddd;
-            border-radius: 5px;
-            padding: 15px 10px;
-            text-align: center;
-            cursor: pointer;
-            background-color: #fafafa;
-            font-size: 15px;
-            font-weight: bold;
-            color: #555;
-        }
-
-        .lang-card:hover {
-            border-color: #76b800;
-            background-color: #f2f9e6;
-            color: #333;
-        }
-
-        #levels-section {
-            display: none;
-            margin-top: 35px;
-            border-top: 1px solid #eeeeee;
-            padding-top: 25px;
-            padding-bottom: 40px;
-        }
-
-        .section-top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .levels-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            gap: 8px;
-            max-height: 360px;
-            overflow-y: auto;
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            background-color: #fafafa;
-        }
-
-        .level-btn {
-            padding: 10px 5px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            background-color: #ffffff;
-            font-weight: bold;
-            font-size: 13px;
-            color: #4b4b4b;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .level-btn:hover {
-            border-color: #76b800;
-            background-color: #f2f9e6;
-        }
-
-        .level-btn.completed {
-            background-color: #76b800;
-            color: #ffffff;
-            border-color: #659e00;
-        }
-
-        #lesson-section {
-            display: none;
-            margin-top: 35px;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            padding: 25px;
-            background-color: #fcfcfc;
-            max-width: 600px;
-            margin-bottom: 40px;
-        }
-
-        .lesson-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #eeeeee;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-
-        .lesson-prompt {
-            font-size: 17px;
-            margin-bottom: 12px;
-        }
-
-        .lesson-word {
-            font-size: 22px;
-            font-weight: bold;
-            margin-bottom: 18px;
-            color: #222;
-        }
-
-        .lesson-input {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-
-        .feedback {
-            margin-top: 15px;
-            font-weight: bold;
-            font-size: 15px;
-        }
-
-        .link-btn {
-            background: none;
-            border: none;
-            color: #4b75b3;
-            cursor: pointer;
-            text-decoration: underline;
-            font-size: 14px;
-        }
-
-        .footer {
-            text-align: right;
-            padding: 20px;
-            font-size: 12px;
-            color: #888888;
-        }
-
-        @media (max-width: 768px) {
-            .languages-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .levels-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
-        }
+        body { font-family: Arial, Helvetica, sans-serif; background: #fff; color: #4b4b4b; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { width: 960px; max-width: 95%; margin: 0 auto; flex: 1; }
+        .header { display: flex; justify-content: flex-end; padding-top: 30px; gap: 10px; }
+        .header input { padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; width: 140px; }
+        .btn-green { background: linear-gradient(#92d41e, #76b800); border: 1px solid #659e00; border-radius: 5px; color: #fff; font-weight: bold; font-size: 14px; padding: 8px 22px; cursor: pointer; }
+        .main-content { margin-top: 40px; padding-left: 20px; }
+        .brand-row { display: flex; align-items: flex-start; gap: 20px; }
+        .tagline { font-size: 20px; color: #555; margin-top: 10px; }
+        .beta-text { margin-top: 5px; font-size: 19px; line-height: 1.4; }
+        .beta-text a { color: #4b75b3; text-decoration: none; font-weight: bold; }
+        .learn-now-wrapper { margin-top: 30px; }
+        .btn-learn-now { font-size: 18px; padding: 12px 32px; }
+        #language-section, #levels-section { display: none; margin-top: 35px; border-top: 1px solid #eee; padding: 25px 0 40px; }
+        .languages-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+        .lang-card { border: 1px solid #ddd; border-radius: 5px; padding: 15px 10px; text-align: center; cursor: pointer; background: #fafafa; font-weight: bold; }
+        .lang-card:hover { border-color: #76b800; background: #f2f9e6; }
+        .section-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .levels-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; max-height: 360px; overflow-y: auto; padding: 10px; border: 1px solid #e0e0e0; background: #fafafa; }
+        .level-btn { padding: 10px 5px; border: 1px solid #ccc; border-radius: 4px; background: #fff; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .level-btn.completed { background: #76b800; color: #fff; border-color: #659e00; }
+        #lesson-section { display: none; margin: 35px 0 40px; border: 1px solid #ccc; border-radius: 6px; padding: 25px; background: #fcfcfc; max-width: 600px; }
+        .lesson-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
+        .lesson-word { font-size: 22px; font-weight: bold; margin: 15px 0; color: #222; }
+        .lesson-input { width: 100%; box-sizing: border-box; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px; }
+        .feedback { margin-top: 15px; font-weight: bold; }
+        .link-btn { background: none; border: none; color: #4b75b3; cursor: pointer; text-decoration: underline; }
+        .footer { text-align: right; padding: 20px; font-size: 12px; color: #888; }
+        @media (max-width: 768px) { .languages-grid { grid-template-columns: repeat(2, 1fr); } .levels-grid { grid-template-columns: repeat(5, 1fr); } }
     </style>
 </head>
 <body>
-
 <div class="container">
     <div class="header">
         <input type="text" placeholder="Username" id="username">
         <input type="password" placeholder="Password" id="password">
         <button type="button" class="btn-green" onclick="handleLogin()">Login</button>
     </div>
-
     <div class="main-content">
         <div class="brand-row">
             <svg width="95" height="95" viewBox="0 0 120 120" xmlns="http://w3.org">
-                <path d="M45 102 L45 112 M40 112 L50 112 M45 108 L38 114 M45 108 L52 114" stroke="#8b6c4c" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M68 102 L68 112 M63 112 L73 112 M68 108 L61 114 M68 108 L75 114" stroke="#8b6c4c" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M26 55 Q12 65 24 85 Q32 78 32 65 Z" fill="#8b6c4c"/>
-                <path d="M88 55 Q105 62 110 72 Q95 82 84 72 Z" fill="#8b6c4c"/>
-                <path d="M28 20 L42 32 Q57 28 72 32 L86 20 Q92 55 86 85 Q80 104 57 104 Q34 104 28 85 Q22 55 28 20 Z" fill="#8b6c4c"/>
-                <circle cx="43" cy="52" r="13" fill="#ffffff" stroke="#8b6c4c" stroke-width="2"/>
-                <circle cx="43" cy="52" r="10.5" fill="none" stroke="#8b6c4c" stroke-width="1.5" stroke-dasharray="3,2"/>
-                <circle cx="43" cy="52" r="7.5" fill="#8b6c4c"/>
-                <text x="43" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">d</text>
-                <circle cx="71" cy="52" r="13" fill="#ffffff" stroke="#8b6c4c" stroke-width="2"/>
-                <circle cx="71" cy="52" r="10.5" fill="none" stroke="#8b6c4c" stroke-width="1.5" stroke-dasharray="3,2"/>
-                <circle cx="71" cy="52" r="7.5" fill="#8b6c4c"/>
-                <text x="71" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">o</text>
-                <path d="M53 56 L53 63 Q57 68 61 63 L61 56" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
-                <path d="M40 78 Q45 84 50 78 M52 78 Q57 84 62 78 M64 78 Q69 84 74 78" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
-                <path d="M46 87 Q51 93 56 87 M58 87 Q63 93 68 87" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M45 102 L45 112 M40 112 L50 112 M45 108 L38 114 M45 108 L52 114 M68 102 L68 112 M63 112 L73 112 M68 108 L61 114 M68 108 L75 114" stroke="#8b6c4c" stroke-width="2.5" stroke-linecap="round"/>
+                <path d="M26 55 Q12 65 24 85 Q32 78 32 65 Z M88 55 Q105 62 110 72 Q95 82 84 72 Z M28 20 L42 32 Q57 28 72 32 L86 20 Q92 55 86 85 Q80 104 57 104 Q34 104 28 85 Q22 55 28 20 Z" fill="#8b6c4c"/>
+                <circle cx="43" cy="52" r="13" fill="#fff" stroke="#8b6c4c" stroke-width="2"/><circle cx="43" cy="52" r="7.5" fill="#8b6c4c"/><text x="43" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">d</text>
+                <circle cx="71" cy="52" r="13" fill="#fff" stroke="#8b6c4c" stroke-width="2"/><circle cx="71" cy="52" r="7.5" fill="#8b6c4c"/><text x="71" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#fff" text-anchor="middle">o</text>
+                <path d="M53 56 L53 63 Q57 68 61 63 L61 56 M40 78 Q45 84 50 78 M52 78 Q57 84 62 78 M64 78 Q69 84 74 78 M46 87 Q51 93 56 87 M58 87 Q63 93 68 87" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
             </svg>
-
-            <div class="tagline">
-                Duolingo is the new way to learn languages.
-            </div>
+            <div class="tagline">Duolingo is the new way to learn languages.</div>
         </div>
+        <div class="beta-text">We're currently in closed beta.<br>Follow us on Twitter (<a href="https://twitter.com" target="_blank">@duolingo</a>) for updates.</div>
+        <div class="learn-now-wrapper"><button type="button" class="btn-green btn-learn-now" onclick="openLanguages()">Learn Now</button></div>
 
-        <div class="beta-text">
-            We're currently in closed beta.<br>
-            Follow us on Twitter (<a href="https://twitter.com" target="_blank">@duolingo</a>) for updates.
-        </div>
-
-        <div class="learn-now-wrapper">
-            <button type="button" class="btn-green btn-learn-now" onclick="openLanguages()">Learn Now</button>
-        </div>
-
-        <div id="language-section">
-            <h2>Which language do you want to learn? (10 Languages)</h2>
-            <div class="languages-grid" id="languages-grid"></div>
-        </div>
-
-        <div id="levels-section">
-            <div class="section-top-bar">
-                <h2 id="levels-title" style="margin:0;">Spanish - 200 Levels</h2>
-                <button type="button" class="link-btn" onclick="openLanguages()">← Back to Languages</button>
-            </div>
-            <div class="levels-grid" id="levels-grid"></div>
-        </div>
-
+        <div id="language-section"><h2>Which language do you want to learn? (10 Languages)</h2><div class="languages-grid" id="languages-grid"></div></div>
+        <div id="levels-section"><div class="section-top-bar"><h2 id="levels-title" style="margin:0;"></h2><button type="button" class="link-btn" onclick="openLanguages()">← Back to Languages</button></div><div class="levels-grid" id="levels-grid"></div></div>
         <div id="lesson-section">
-            <div class="lesson-header">
-Χρησιμοποιήστε τον κώδικα με προσοχή.
-Spanish - Level 1
-← Back to 200 Levels
+            <div class="lesson-header"><strong id="lesson-title" style="font-size:18px;color:#76b800;"></strong><button type="button" class="link-btn" onclick="backToLevels()">← Back to 200 Levels</button></div>
+            <div>Translate this into English:</div>
+            <div class="lesson-word" id="lesson-word"></div>
+            <input type="text" class="lesson-input" id="user-answer" placeholder="Write the English meaning...">
+            <button type="button" class="btn-green" onclick="checkAnswer()">Check Answer</button>
+            <button type="button" class="btn-green" style="background:#6c9a14;margin-left:8px;" onclick="nextLevel()">Next Level →</button>
+            <div class="feedback" id="feedback"></div>
+        </div>
+    </div>
+</div>
+<div class="footer">© 2010 Carnegie Mellon University</div>
 
-Translate this into English:
-"Hola"
-
-
-Check Answer
-Next Level →
-
-
-
-
-© 2010 Carnegie Mellon University
+<script>
 const languages = [
-{
-name: "Spanish",
-words: [
-{ q: "Hola", a: "hello" }, { q: "Gracias", a: "thank you" }, { q: "Agua", a: "water" },
-{ q: "Pan", a: "bread" }, { q: "Manzana", a: "apple" }, { q: "Leche", a: "milk" },
-{ q: "Gato", a: "cat" }, { q: "Perro", a: "dog" }, { q: "Casa", a: "house" },
-{ q: "Libro", a: "book" }, { q: "Amigo", a: "friend" }, { q: "Sol", a: "sun" },
-{ q: "Luna", a: "moon" }, { q: "Escuela", a: "school" }, { q: "Ciudad", a: "city" },
-{ q: "Tiempo", a: "time" }, { q: "Trabajo", a: "work" }, { q: "Familia", a: "family" },
-{ q: "Buenos días", a: "good morning" }, { q: "Buenas noches", a: "good night" }
-]
-},
-{
-name: "French",
-words: [
-{ q: "Bonjour", a: "hello" }, { q: "Merci", a: "thank you" }, { q: "Eau", a: "water" },
-{ q: "Pain", a: "bread" }, { q: "Pomme", a: "apple" }, { q: "Lait", a: "milk" },
-{ q: "Chat", a: "cat" }, { q: "Chien", a: "dog" }, { q: "Maison", a: "house" },
-{ q: "Livre", a: "book" }, { q: "Ami", a: "friend" }, { q: "Soleil", a: "sun" },
-{ q: "Lune", a: "moon" }, { q: "École", a: "school" }, { q: "Ville", a: "city" },
-{ q: "Temps", a: "time" }, { q: "Travail", a: "work" }, { q: "Famille", a: "family" },
-{ q: "Bonsoir", a: "good evening" }, { q: "Au revoir", a: "goodbye" }
-]
-},
-{
-name: "German",
-words: [
-{ q: "Hallo", a: "hello" }, { q: "Danke", a: "thank you" }, { q: "Wasser", a: "water" },
-{ q: "Brot", a: "bread" }, { q: "Apfel", a: "apple" }, { q: "Milch", a: "milk" },
-{ q: "Katze", a: "cat" }, { q: "Hund", a: "dog" }, { q: "Haus", a: "house" },
-{ q: "Buch", a: "book" }, { q: "Freund", a: "friend" }, { q: "Sonne", a: "sun" },
-{ q: "Mond", a: "moon" }, { q: "Schule", a: "school" }, { q: "Stadt", a: "city" },
-{ q: "Zeit", a: "time" }, { q: "Arbeit", a: "work" }, { q: "Familie", a: "family" },
-{ q: "Guten Morgen", a: "good morning" }, { q: "Gute Nacht", a: "good night" }
-]
-},
-{
-name: "Italian",
-words: [
-{ q: "Ciao", a: "hello" }, { q: "Grazie", a: "thank you" }, { q: "Acqua", a: "water" },
-{ q: "Pane", a: "bread" }, { q: "Mela", a: "apple" }, { q: "Latte", a: "milk" },
-{ q: "Gatto", a: "cat" }, { q: "Cane", a: "dog" }, { q: "Casa", a: "house" },
-{ q: "Libro", a: "book" }, { q: "Amico", a: "friend" }, { q: "Sole", a: "sun" },
-{ q: "Luna", a: "moon" }, { q: "Scuola", a: "school" }, { q: "Città", a: "city" },
-{ q: "Tempo", a: "time" }, { q: "Lavoro", a: "work" }, { q: "Famiglia", a: "family" },
-{ q: "Buongiorno", a: "good morning" }, { q: "Buonanotte", a: "good night" }
-]
-},
-{
-name: "Portuguese",
-words: [
-{ q: "Olá", a: "hello" }, { q: "Obrigado", a: "thank you" }, { q: "Água", a: "water" },
-{ q: "Pão", a: "bread" }, { q: "Maçã", a: "apple" }, { q: "Leite", a: "milk" },
-{ q: "Gato", a: "cat" }, { q: "Cachorro", a: "dog" }, { q: "Casa", a: "house" },
-{ q: "Livro", a: "book" }, { q: "Amigo", a: "friend" }, { q: "Sol", a: "sun" },
-{ q: "Lua", a: "moon" }, { q: "Escola", a: "school" }, { q: "Cidade", a: "city" },
-{ q: "Tempo", a: "time" }, { q: "Trabalho", a: "work" }, { q: "Família", a: "family" },
-{ q: "Bom dia", a: "good morning" }, { q: "Boa noite", a: "good night" }
-]
-},
-{
-name: "Greek",
-words: [
-{ q: "Γεια σου", a: "hello" }, { q: "Ευχαριστώ", a: "thank you" }, { q: "Νερό", a: "water" },
-{ q: "Ψωμί", a: "bread" }, { q: "Μήλο", a: "apple" }, { q: "Γάλα", a: "milk" },
-{ q: "Γάτα", a: "cat" }, { q: "Σκύλος", a: "dog" }, { q: "Σπίτι", a: "house" },
-{ q: "Βιβλίο", a: "book" }, { q: "Φίλος", a: "friend" }, { q: "Ήλιος", a: "sun" },
-{ q: "Φεγγάρι", a: "moon" }, { q: "Σχολείο", a: "school" }, { q: "Πόλη", a: "city" },
-{ q: "Χρόνος", a: "time" }, { q: "Δουλειά", a: "work" }, { q: "Οικογένεια", a: "family" },
-{ q: "Καλημέρα", a: "good morning" }, { q: "Καληνύχτα", a: "good night" }
-]
-},
-{
-name: "Japanese",
-words: [
-{ q: "こんにちは (Konnichiwa)", a: "hello" }, { q: "ありがとう (Arigatou)", a: "thank you" }, { q: "水 (Mizu)", a: "water" },
-{ q: "パン (Pan)", a: "bread" }, { q: "りんご (Ringo)", a: "apple" }, { q: "牛乳 (Gyuunyuu)", a: "milk" },
-{ q: "猫 (Neko)", a: "cat" }, { q: "犬 (Inu)", a: "dog" }, { q: "家 (Ie)", a: "house" },
-{ q: "本 (Hon)", a: "book" }, { q: "友達 (Tomodachi)", a: "friend" }, { q: "太陽 (Taiyou)", a: "sun" },
-{ q: "月 (Tsuki)", a: "moon" }, { q: "学校 (Gakkou)", a: "school" }, { q: "都市 (Toshi)", a: "city" },
-{ q: "時間 (Jikan)", a: "time" }, { q: "仕事 (Shigoto)", a: "work" }, { q: "家族 (Kazoku)", a: "family" },
-{ q: "おはよう (Ohayou)", a: "good morning" }, { q: "おやすみ (Oyasumi)", a: "good night" }
-]
-},
-{
-name: "Russian",
-words: [
-{ q: "Привет (Privet)", a: "hello" }, { q: "Спасибо (Spasibo)", a: "thank you" }, { q: "Вода (Voda)", a: "water" },
-{ q: "Хлеб (Khleb)", a: "bread" }, { q: "Яблоко (Yabloko)", a: "apple" }, { q: "Молоко (Moloko)", a: "milk" },
-{ q: "Кот (Kot)", a: "cat" }, { q: "Собака (Sobaka)", a: "dog" }, { q: "Дом (Dom)", a: "house" },
-{ q: "Книга (Kniga)", a: "book" }, { q: "Друг (Drug)", a: "friend" }, { q: "Солнце (Solntse)", a: "sun" },
-{ q: "Луна (Luna)", a: "moon" }, { q: "Школа (Shkola)", a: "school" }, { q: "Город (Gorod)", a: "city" },
-{ q: "Время (Vremya)", a: "time" }, { q: "Работа (Rabota)", a: "work" }, { q: "Семья (Semya)", a: "family" },
-{ q: "Доброе утро (Dobroye utro)", a: "good morning" }, { q: "Спокойной ночи", a: "good night" }
-]
-},
-{
-name: "Korean",
-words: [
-{ q: "안녕하세요 (Annyeonghaseyo)", a: "hello" }, { q: "감사합니다 (Gamsahamnida)", a: "thank you" }, { q: "물 (Mul)", a: "water" },
-{ q: "빵 (Ppang)", a: "bread" }, { q: "사과 (Sagwa)", a: "apple" }, { q: "우유 (Uyu)", a: "milk" },
-{ q: "고양이 (Goyangi)", a: "cat" }, { q: "개 (Gae)", a: "dog" }, { q: "집 (Jip)", a: "house" },
-{ q: "책 (Chaek)", a: "book" }, { q: "친구 (Chingu)", a: "friend" }, { q: "태양 (Taeyang)", a: "sun" },
-{ q: "달 (Dal)", a: "moon" }, { q: "학교 (Hakgyo)", a: "school" }, { q: "도시 (Dosi)", a: "city" },
-{ q: "시간 (Sigan)", a: "time" }, { q: "일 (Il)", a: "work" }, { q: "가족 (Gajok)", a: "family" },
-{ q: "좋은 아침 (Joeun achim)", a: "good morning" }, { q: "잘 자요 (Jal jayo)", a: "good night" }
-]
-},
-{
-name: "Dutch",
-words: [
-{ q: "Hallo", a: "hello" }, { q: "Dank je", a: "thank you" }, { q: "Water", a: "water" },
-{ q: "Brood", a: "bread" }, { q: "Appel", a: "apple" }, { q: "Melk", a: "milk" },
-{ q: "Kat", a: "cat" }, { q: "Hond", a: "dog" }, { q: "Huis", a: "house" },
-{ q: "Boek", a: "book" }, { q: "Vriend", a: "friend" }, { q: "Zon", a: "sun" },
-{ q: "Maan", a: "moon" }, { q: "School", a: "school" }, { q: "Stad", a: "city" },
-{ q: "Tijd", a: "time" }, { q: "Werk", a: "work" }, { q: "Familie", a: "family" },
-{ q: "Goedemorgen", a: "good morning" }, { q: "Goedenacht", a: "good night" }
-]
-}
+    { name: "Spanish", words: [{q:"Hola",a:"hello"},{q:"Gracias",a:"thank you"},{q:"Agua",a:"water"},{q:"Pan",a:"bread"},{q:"Manzana",a:"apple"},{q:"Leche",a:"milk"},{q:"Gato",a:"cat"},{q:"Perro",a:"dog"},{q:"Casa",a:"house"},{q:"Libro",a:"book"}] },
+    { name: "French", words: [{q:"Bonjour",a:"hello"},{q:"Merci",a:"thank you"},{q:"Eau",a:"water"},{q:"Pain",a:"bread"},{q:"Pomme",a:"apple"},{q:"Lait",a:"milk"},{q:"Chat",a:"cat"},{q:"Chien",a:"dog"},{q:"Maison",a:"house"},{q:"Livre",a:"book"}] },
+    { name: "German", words: [{q:"Hallo",a:"hello"},{q:"Danke",a:"thank you"},{q:"Wasser",a:"water"},{q:"Brot",a:"bread"},{q:"Apfel",a:"apple"},{q:"Milch",a:"milk"},{q:"Katze",a:"cat"},{q:"Hund",a:"dog"},{q:"Haus",a:"house"},{q:"Buch",a:"book"}] },
+    { name: "Italian", words: [{q:"Ciao",a:"hello"},{q:"Grazie",a:"thank you"},{q:"Acqua",a:"water"},{q:"Pane",a:"bread"},{q:"Mela",a:"apple"},{q:"Latte",a:"milk"},{q:"Gatto",a:"cat"},{q:"Cane",a:"dog"},{q:"Casa",a:"house"},{q:"Libro",a:"book"}] },
+    { name: "Portuguese", words: [{q:"Olá",a:"hello"},{q:"Obrigado",a:"thank you"},{q:"Água",a:"water"},{q:"Pão",a:"bread"},{q:"Maçã",a:"apple"},{q:"Leite",a:"milk"},{q:"Gato",a:"cat"},{q:"Cachorro",a:"dog"},{q:"Casa",a:"house"},{q:"Livro",a:"book"}] },
+    { name: "Greek", words: [{q:"Γεια σου",a:"hello"},{q:"Ευχαριστώ",a:"thank you"},{q:"Νερό",a:"water"},{q:"Ψωμί",a:"bread"},{q:"Μήλο",a:"apple"},{q:"Γάλα",a:"milk"},{q:"Γάτα",a:"cat"},{q:"Σκύλος",a:"dog"},{q:"Σπίτι",a:"house"},{q:"Βιβλίο",a:"book"}] },
+    { name: "Japanese", words: [{q:"こんにちは (Konnichiwa)",a:"hello"},{q:"ありがとう (Arigatou)",a:"thank you"},{q:"水 (Mizu)",a:"water"},{q:"パン (Pan)",a:"bread"},{q:"りんご (Ringo)",a:"apple"},{q:"牛乳 (Gyuunyuu)",a:"milk"},{q:"猫 (Neko)",a:"cat"},{q:"犬 (Inu)",a:"dog"},{q:"家 (Ie)",a:"house"},{q:"本 (Hon)",a:"book"}] },
+    { name: "Russian", words: [{q:"Привет (Privet)",a:"hello"},{q:"Спасибо (Spasibo)",a:"thank you"},{q:"Вода (Voda)",a:"water"},{q:"Хлеб (Khleb)",a:"bread"},{q:"Яблоко (Yabloko)",a:"apple"},{q:"Молоко (Moloko)",a:"milk"},{q:"Кот (Kot)",a:"cat"},{q:"Собака (Sobaka)",a:"dog"},{q:"Дом (Dom)",a:"house"},{q:"Книга (Kniga)",a:"book"}] },
+    { name: "Korean", words: [{q:"안녕하세요 (Annyeonghaseyo)",a:"hello"},{q:"감사합니다 (Gamsahamnida)",a:"thank you"},{q:"물 (Mul)",a:"water"},{q:"빵 (Ppang)",a:"bread"},{q:"사과 (Sagwa)",a:"apple"},{q:"우유 (Uyu)",a:"milk"},{q:"고양이 (Goyangi)",a:"cat"},{q:"개 (Gae)",a:"dog"},{q:"집 (Jip)",a:"house"},{q:"책 (Chaek)",a:"book"}] },
+    { name: "Dutch", words: [{q:"Hallo",a:"hello"},{q:"Dank je",a:"thank you"},{q:"Water",a:"water"},{q:"Brood",a:"bread"},{q:"Appel",a:"apple"},{q:"Melk",a:"milk"},{q:"Kat",a:"cat"},{q:"Hond",a:"dog"},{q:"Huis",a:"house"},{q:"Boek",a:"book"}] }
 ];
-let selectedLangIndex = 0;
-let selectedLevel = 1;
-let completedLevels = {};
+let selectedLang = 0, selectedLevel = 1, completed = {};
 const langGrid = document.getElementById("languages-grid");
-for (let i = 0; i < languages.length; i++) {
-const card = document.createElement("div");
-card.className = "lang-card";
-card.innerHTML = languages[i].name + "
-200 Levels";
-card.onclick = function() {
-selectLanguage(i);
-};
-langGrid.appendChild(card);
-}
+languages.forEach((l, i) => {
+    const d = document.createElement("div");
+    d.className = "lang-card";
+    d.innerHTML = l.name + "<br><span style='font-size:11px;color:#76b800;'>200 Levels</span>";
+    d.onclick = () => selectLanguage(i);
+    langGrid.appendChild(d);
+});
 function openLanguages() {
-document.getElementById("levels-section").style.display = "none";
-document.getElementById("lesson-section").style.display = "none";
-const langSec = document.getElementById("language-section");
-langSec.style.display = "block";
-langSec.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("levels-section").style.display = "none";
+    document.getElementById("lesson-section").style.display = "none";
+    document.getElementById("language-section").style.display = "block";
 }
-function selectLanguage(index) {
-selectedLangIndex = index;
-const lang = languages[index];
-document.getElementById("language-section").style.display = "none";
-document.getElementById("lesson-section").style.display = "none";
-const levelsSec = document.getElementById("levels-section");
-levelsSec.style.display = "block";
-document.getElementById("levels-title").innerText = lang.name + " - Choose Level (1 to 200)";
-const levelsGrid = document.getElementById("levels-grid");
-levelsGrid.innerHTML = "";
-for (let lvl = 1; lvl <= 200; lvl++) {
-const btn = document.createElement("button");
-btn.type = "button";
-btn.className = "level-btn";
-const key = lang.name + "_" + lvl;
-if (completedLevels[key]) {
-btn.className += " completed";
-}
-btn.innerText = "Lvl " + lvl;
-btn.onclick = function() {
-startLevel(lvl);
-};
-levelsGrid.appendChild(btn);
-}
-levelsSec.scrollIntoView({ behavior: "smooth" });
+function selectLanguage(i) {
+    selectedLang = i;
+    document.getElementById("language-section").style.display = "none";
+    document.getElementById("lesson-section").style.display = "none";
+    document.getElementById("levels-section").style.display = "block";
+    document.getElementById("levels-title").innerText = languages[i].name + " - Choose Level (1 to 200)";
+    const grid = document.getElementById("levels-grid");
+    grid.innerHTML = "";
+    for (let lvl = 1; lvl <= 200; lvl++) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "level-btn" + (completed[languages[i].name + "_" + lvl] ? " completed" : "");
+        b.innerText = "Lvl " + lvl;
+        b.onclick = () => startLevel(lvl);
+        grid.appendChild(b);
+    }
 }
 function startLevel(lvl) {
-selectedLevel = lvl;
-const lang = languages[selectedLangIndex];
-const wordObj = lang.words[(lvl - 1) % lang.words.length];
-document.getElementById("levels-section").style.display = "none";
-const lessonSec = document.getElementById("lesson-section");
-lessonSec.style.display = "block";
-document.getElementById("lesson-title").innerText = lang.name + " — Level " + lvl + " / 200";
-document.getElementById("lesson-word").innerText = '"' + wordObj.q + '"';
-document.getElementById("user-answer").value = "";
-document.getElementById("feedback").innerText = "";
-lessonSec.scrollIntoView({ behavior: "smooth" });
+    selectedLevel = lvl;
+    const l = languages[selectedLang];
+    const w = l.words[(lvl - 1) % l.words.length];
+    document.getElementById("levels-section").style.display = "none";
+    document.getElementById("lesson-section").style.display = "block";
+    document.getElementById("lesson-title").innerText = l.name + " — Level " + lvl + " / 200";
+    document.getElementById("lesson-word").innerText = '"' + w.q + '"';
+    document.getElementById("user-answer").value = "";
+    document.getElementById("feedback").innerText = "";
 }
-function backToLevels() {
-selectLanguage(selectedLangIndex);
-}
+function backToLevels() { selectLanguage(selectedLang); }
 function checkAnswer() {
-const lang = languages[selectedLangIndex];
-const wordObj = lang.words[(selectedLevel - 1) % lang.words.length];
-const userAns = document.getElementById("user-answer").value.toLowerCase().trim();
-const feedback = document.getElementById("feedback");
-if (!userAns) {
-feedback.style.color = "#d9534f";
-feedback.innerText = "Please type your answer first!";
-return;
+    const l = languages[selectedLang];
+    const w = l.words[(selectedLevel - 1) % l.words.length];
+    const ans = document.getElementById("user-answer").value.toLowerCase().trim();
+    const fb = document.getElementById("feedback");
+    if (ans === w.a) { fb.style.color = "#76b800"; fb.innerText = "Correct! Level " + selectedLevel + " completed!"; completed[l.name + "_" + selectedLevel] = true; }
+    else { fb.style.color = "#d9534f"; fb.innerText = 'Incorrect. Answer: "' + w.a + '"'; }
 }
-if (userAns === wordObj.a) {
-feedback.style.color = "#76b800";
-feedback.innerText = "Correct! Level " + selectedLevel + " completed!";
-completedLevels[lang.name + "_" + selectedLevel] = true;
-} else {
-feedback.style.color = "#d9534f";
-feedback.innerText = 'Incorrect. Correct answer: "' + wordObj.a + '"';
-}
-}
-function nextLevel() {
-if (selectedLevel < 200) {
-startLevel(selectedLevel + 1);
-} else {
-alert("Congratulations! You reached Level 200!");
-backToLevels();
-}
-}
-function handleLogin() {
-const user = document.getElementById("username").value || "Guest";
-alert("Welcome to Duolingo Closed Beta (2010), " + user + "!");
-}
-Οι απαντήσεις AI μπορεί να περιλαμβάνουν λάθη. Μάθετε περισσότερα
+function nextLevel() { if (selectedLevel < 200) startLevel(selectedLevel + 1); else backToLevels(); }
+function handleLogin() { alert("Welcome to Duolingo Closed Beta (2010), " + (document.getElementById("username").value || "Guest") + "!"); }
+</script>
+</body>
+</html>
