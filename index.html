@@ -24,10 +24,13 @@
         .section-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .levels-grid { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; max-height: 360px; overflow-y: auto; padding: 10px; border: 1px solid #e0e0e0; background: #fafafa; }
         .level-btn { padding: 10px 5px; border: 1px solid #ccc; border-radius: 4px; background: #fff; font-weight: bold; font-size: 13px; cursor: pointer; }
+        .level-btn.hard { border-color: #e6a100; }
+        .level-btn.expert { border-color: #d9534f; }
         .level-btn.completed { background: #76b800; color: #fff; border-color: #659e00; }
         #lesson-section { display: none; margin: 35px 0 40px; border: 1px solid #ccc; border-radius: 6px; padding: 25px; background: #fcfcfc; max-width: 600px; }
-        .lesson-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px; }
-        .lesson-word { font-size: 22px; font-weight: bold; margin: 15px 0; color: #222; }
+        .lesson-header { display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .diff-badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; margin-bottom: 10px; }
+        .lesson-word { font-size: 21px; font-weight: bold; margin: 12px 0 16px; color: #222; }
         .lesson-input { width: 100%; box-sizing: border-box; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px; margin-bottom: 15px; }
         .feedback { margin-top: 15px; font-weight: bold; }
         .link-btn { background: none; border: none; color: #4b75b3; cursor: pointer; text-decoration: underline; }
@@ -60,9 +63,10 @@
         <div id="levels-section"><div class="section-top-bar"><h2 id="levels-title" style="margin:0;"></h2><button type="button" class="link-btn" onclick="openLanguages()">← Back to Languages</button></div><div class="levels-grid" id="levels-grid"></div></div>
         <div id="lesson-section">
             <div class="lesson-header"><strong id="lesson-title" style="font-size:18px;color:#76b800;"></strong><button type="button" class="link-btn" onclick="backToLevels()">← Back to 200 Levels</button></div>
-            <div>Translate this into English:</div>
+            <div id="diff-badge" class="diff-badge"></div>
+            <div id="lesson-prompt">Translate this into English:</div>
             <div class="lesson-word" id="lesson-word"></div>
-            <input type="text" class="lesson-input" id="user-answer" placeholder="Write the English meaning...">
+            <input type="text" class="lesson-input" id="user-answer" placeholder="Write your translation...">
             <button type="button" class="btn-green" onclick="checkAnswer()">Check Answer</button>
             <button type="button" class="btn-green" style="background:#6c9a14;margin-left:8px;" onclick="nextLevel()">Next Level →</button>
             <div class="feedback" id="feedback"></div>
@@ -70,26 +74,58 @@
     </div>
 </div>
 <div class="footer">© 2010 Carnegie Mellon University</div>
-
 <script>
 const languages = [
-    { name: "Spanish", words: [{q:"Hola",a:"hello"},{q:"Gracias",a:"thank you"},{q:"Agua",a:"water"},{q:"Pan",a:"bread"},{q:"Manzana",a:"apple"},{q:"Leche",a:"milk"},{q:"Gato",a:"cat"},{q:"Perro",a:"dog"},{q:"Casa",a:"house"},{q:"Libro",a:"book"}] },
-    { name: "French", words: [{q:"Bonjour",a:"hello"},{q:"Merci",a:"thank you"},{q:"Eau",a:"water"},{q:"Pain",a:"bread"},{q:"Pomme",a:"apple"},{q:"Lait",a:"milk"},{q:"Chat",a:"cat"},{q:"Chien",a:"dog"},{q:"Maison",a:"house"},{q:"Livre",a:"book"}] },
-    { name: "German", words: [{q:"Hallo",a:"hello"},{q:"Danke",a:"thank you"},{q:"Wasser",a:"water"},{q:"Brot",a:"bread"},{q:"Apfel",a:"apple"},{q:"Milch",a:"milk"},{q:"Katze",a:"cat"},{q:"Hund",a:"dog"},{q:"Haus",a:"house"},{q:"Buch",a:"book"}] },
-    { name: "Italian", words: [{q:"Ciao",a:"hello"},{q:"Grazie",a:"thank you"},{q:"Acqua",a:"water"},{q:"Pane",a:"bread"},{q:"Mela",a:"apple"},{q:"Latte",a:"milk"},{q:"Gatto",a:"cat"},{q:"Cane",a:"dog"},{q:"Casa",a:"house"},{q:"Libro",a:"book"}] },
-    { name: "Portuguese", words: [{q:"Olá",a:"hello"},{q:"Obrigado",a:"thank you"},{q:"Água",a:"water"},{q:"Pão",a:"bread"},{q:"Maçã",a:"apple"},{q:"Leite",a:"milk"},{q:"Gato",a:"cat"},{q:"Cachorro",a:"dog"},{q:"Casa",a:"house"},{q:"Livro",a:"book"}] },
-    { name: "Greek", words: [{q:"Γεια σου",a:"hello"},{q:"Ευχαριστώ",a:"thank you"},{q:"Νερό",a:"water"},{q:"Ψωμί",a:"bread"},{q:"Μήλο",a:"apple"},{q:"Γάλα",a:"milk"},{q:"Γάτα",a:"cat"},{q:"Σκύλος",a:"dog"},{q:"Σπίτι",a:"house"},{q:"Βιβλίο",a:"book"}] },
-    { name: "Japanese", words: [{q:"こんにちは (Konnichiwa)",a:"hello"},{q:"ありがとう (Arigatou)",a:"thank you"},{q:"水 (Mizu)",a:"water"},{q:"パン (Pan)",a:"bread"},{q:"りんご (Ringo)",a:"apple"},{q:"牛乳 (Gyuunyuu)",a:"milk"},{q:"猫 (Neko)",a:"cat"},{q:"犬 (Inu)",a:"dog"},{q:"家 (Ie)",a:"house"},{q:"本 (Hon)",a:"book"}] },
-    { name: "Russian", words: [{q:"Привет (Privet)",a:"hello"},{q:"Спасибо (Spasibo)",a:"thank you"},{q:"Вода (Voda)",a:"water"},{q:"Хлеб (Khleb)",a:"bread"},{q:"Яблоко (Yabloko)",a:"apple"},{q:"Молоко (Moloko)",a:"milk"},{q:"Кот (Kot)",a:"cat"},{q:"Собака (Sobaka)",a:"dog"},{q:"Дом (Dom)",a:"house"},{q:"Книга (Kniga)",a:"book"}] },
-    { name: "Korean", words: [{q:"안녕하세요 (Annyeonghaseyo)",a:"hello"},{q:"감사합니다 (Gamsahamnida)",a:"thank you"},{q:"물 (Mul)",a:"water"},{q:"빵 (Ppang)",a:"bread"},{q:"사과 (Sagwa)",a:"apple"},{q:"우유 (Uyu)",a:"milk"},{q:"고양이 (Goyangi)",a:"cat"},{q:"개 (Gae)",a:"dog"},{q:"집 (Jip)",a:"house"},{q:"책 (Chaek)",a:"book"}] },
-    { name: "Dutch", words: [{q:"Hallo",a:"hello"},{q:"Dank je",a:"thank you"},{q:"Water",a:"water"},{q:"Brood",a:"bread"},{q:"Appel",a:"apple"},{q:"Melk",a:"milk"},{q:"Kat",a:"cat"},{q:"Hond",a:"dog"},{q:"Huis",a:"house"},{q:"Boek",a:"book"}] }
+    { name: "Spanish",
+      easy: [{q:"Hola",a:"hello"},{q:"Agua",a:"water"},{q:"Pan",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}],
+      med: [{q:"Quiero beber agua fría",a:"i want to drink cold water"},{q:"El gato negro duerme en la casa",a:"the black cat sleeps in the house"},{q:"Nosotros leemos libros interesantes",a:"we read interesting books"}],
+      hard: [{q:"Translate to Spanish: She always speaks fast",a:"ella siempre habla rapido"},{q:"Translate to Spanish: We need more time today",a:"necesitamos mas tiempo hoy"}] },
+    { name: "French",
+      easy: [{q:"Bonjour",a:"hello"},{q:"Eau",a:"water"},{q:"Pain",a:"bread"},{q:"Chat",a:"cat"},{q:"Maison",a:"house"}],
+      med: [{q:"Je veux boire de l'eau froide",a:"i want to drink cold water"},{q:"Le chat noir dort dans la maison",a:"the black cat sleeps in the house"},{q:"Nous lisons des livres intéressants",a:"we read interesting books"}],
+      hard: [{q:"Translate to French: She always speaks fast",a:"elle parle toujours vite"},{q:"Translate to French: We need more time today",a:"nous avons besoin de plus de temps aujourd'hui"}] },
+    { name: "German",
+      easy: [{q:"Hallo",a:"hello"},{q:"Wasser",a:"water"},{q:"Brot",a:"bread"},{q:"Katze",a:"cat"},{q:"Haus",a:"house"}],
+      med: [{q:"Ich möchte kaltes Wasser trinken",a:"i want to drink cold water"},{q:"Die schwarze Katze schläft im Haus",a:"the black cat sleeps in the house"},{q:"Wir lesen interessante Bücher",a:"we read interesting books"}],
+      hard: [{q:"Translate to German: She always speaks fast",a:"sie spricht immer schnell"},{q:"Translate to German: We need more time today",a:"wir brauchen heute mehr zeit"}] },
+    { name: "Italian",
+      easy: [{q:"Ciao",a:"hello"},{q:"Acqua",a:"water"},{q:"Pane",a:"bread"},{q:"Gatto",a:"cat"},{q:"Casa",a:"house"}],
+      med: [{q:"Voglio bere acqua fredda",a:"i want to drink cold water"},{q:"Il gatto nero dorme in casa",a:"the black cat sleeps in the house"},{q:"Leggiamo libri interessanti",a:"we read interesting books"}],
+      hard: [{q:"Translate to Italian: She always speaks fast",a:"lei parla sempre velocemente"},{q:"Translate to Italian: We need more time today",a:"abbiamo bisogno di piu tempo oggi"}] },
+    { name: "Portuguese",
+      easy: [{q:"Olá",a:"hello"},{q:"Água",a:"water"},{q:"Pão",a:"bread"},{q:"Gato",a:"cat"},{q:"Casa",a:"house"}],
+      med: [{q:"Eu quero beber água fria",a:"i want to drink cold water"},{q:"O gato preto dorme na casa",a:"the black cat sleeps in the house"},{q:"Nós lemos livros interessantes",a:"we read interesting books"}],
+      hard: [{q:"Translate to Portuguese: She always speaks fast",a:"ela sempre fala rapido"},{q:"Translate to Portuguese: We need more time today",a:"precisamos de mais tempo hoje"}] }
 ];
-let selectedLang = 0, selectedLevel = 1, completed = {};
+    languages.push(
+    { name: "Greek",
+      easy: [{q:"Γεια σου",a:"hello"},{q:"Νερό",a:"water"},{q:"Ψωμί",a:"bread"},{q:"Γάτα",a:"cat"},{q:"Σπίτι",a:"house"}],
+      med: [{q:"Θέλω να πιω κρύο νερό",a:"i want to drink cold water"},{q:"Η μαύρη γάτα κοιμάται στο σπίτι",a:"the black cat sleeps in the house"}],
+      hard: [{q:"Translate to Greek: She always speaks fast",a:"αυτη μιλαει παντα γρηγορα"},{q:"Translate to Greek: We need more time today",a:"χρειαζομαστε περισσοτερο χρονο σημερα"}] },
+    { name: "Japanese",
+      easy: [{q:"こんにちは (Konnichiwa)",a:"hello"},{q:"水 (Mizu)",a:"water"},{q:"パン (Pan)",a:"bread"},{q:"猫 (Neko)",a:"cat"},{q:"家 (Ie)",a:"house"}],
+      med: [{q:"冷たい水が飲みたいです (Tsumetai mizu ga nomitai desu)",a:"i want to drink cold water"},{q:"黒い猫は家で寝ています (Kuroi neko wa ie de neteimasu)",a:"the black cat sleeps in the house"}],
+      hard: [{q:"Translate to Japanese (Romaji): Thank you very much",a:"arigatou gozaimasu"},{q:"Translate to Japanese (Romaji): Good morning",a:"ohayou gozaimasu"}] },
+    { name: "Russian",
+      easy: [{q:"Привет (Privet)",a:"hello"},{q:"Вода (Voda)",a:"water"},{q:"Хлеб (Khleb)",a:"bread"},{q:"Кот (Kot)",a:"cat"},{q:"Дом (Dom)",a:"house"}],
+      med: [{q:"Я хочу пить холодную воду (Ya khochu pit kholodnuyu vodu)",a:"i want to drink cold water"},{q:"Чёрный кот спит в доме (Chyorny kot spit v dome)",a:"the black cat sleeps in the house"}],
+      hard: [{q:"Translate to Russian (Latin): Thank you very much",a:"bolshoye spasibo"},{q:"Translate to Russian (Latin): Good morning",a:"dobroye utro"}] },
+    { name: "Korean",
+      easy: [{q:"안녕하세요 (Annyeonghaseyo)",a:"hello"},{q:"물 (Mul)",a:"water"},{q:"빵 (Ppang)",a:"bread"},{q:"고양이 (Goyangi)",a:"cat"},{q:"집 (Jip)",a:"house"}],
+      med: [{q:"차가운 물을 마시고 싶어요 (Chagaun mureul masigo sipeoyo)",a:"i want to drink cold water"},{q:"검은 고양이가 집에서 잡니다 (Geomeun goyangiga jibeseo jamnida)",a:"the black cat sleeps in the house"}],
+      hard: [{q:"Translate to Korean (Romanized): Thank you",a:"gamsahamnida"},{q:"Translate to Korean (Romanized): Good night",a:"jal jayo"}] },
+    { name: "Dutch",
+      easy: [{q:"Hallo",a:"hello"},{q:"Water",a:"water"},{q:"Brood",a:"bread"},{q:"Kat",a:"cat"},{q:"Huis",a:"house"}],
+      med: [{q:"Ik wil koud water drinken",a:"i want to drink cold water"},{q:"De zwarte kat slaapt in het huis",a:"the black cat sleeps in the house"}],
+      hard: [{q:"Translate to Dutch: She always speaks fast",a:"zij praat altijd snel"},{q:"Translate to Dutch: We need more time today",a:"wij hebben vandaag meer tijd nodig"}] }
+);
+
+let selectedLang = 0, selectedLevel = 1, completed = {}, currentQ = null;
 const langGrid = document.getElementById("languages-grid");
 languages.forEach((l, i) => {
     const d = document.createElement("div");
     d.className = "lang-card";
-    d.innerHTML = l.name + "<br><span style='font-size:11px;color:#76b800;'>200 Levels</span>";
+    d.innerHTML = l.name + "<br><span style='font-size:11px;color:#76b800;'>200 Progressive Levels</span>";
     d.onclick = () => selectLanguage(i);
     langGrid.appendChild(d);
 });
@@ -103,13 +139,14 @@ function selectLanguage(i) {
     document.getElementById("language-section").style.display = "none";
     document.getElementById("lesson-section").style.display = "none";
     document.getElementById("levels-section").style.display = "block";
-    document.getElementById("levels-title").innerText = languages[i].name + " - Choose Level (1 to 200)";
+    document.getElementById("levels-title").innerText = languages[i].name + " - Choose Level (1-50 Easy, 51-120 Medium, 121-200 Hard)";
     const grid = document.getElementById("levels-grid");
     grid.innerHTML = "";
     for (let lvl = 1; lvl <= 200; lvl++) {
         const b = document.createElement("button");
         b.type = "button";
-        b.className = "level-btn" + (completed[languages[i].name + "_" + lvl] ? " completed" : "");
+        let tier = lvl <= 50 ? "" : (lvl <= 120 ? " hard" : " expert");
+        b.className = "level-btn" + tier + (completed[languages[i].name + "_" + lvl] ? " completed" : "");
         b.innerText = "Lvl " + lvl;
         b.onclick = () => startLevel(lvl);
         grid.appendChild(b);
@@ -118,22 +155,42 @@ function selectLanguage(i) {
 function startLevel(lvl) {
     selectedLevel = lvl;
     const l = languages[selectedLang];
-    const w = l.words[(lvl - 1) % l.words.length];
+    const badge = document.getElementById("diff-badge");
+    const prompt = document.getElementById("lesson-prompt");
+    if (lvl <= 50) {
+        currentQ = l.easy[(lvl - 1) % l.easy.length];
+        badge.style.background = "#76b800"; badge.innerText = "BEGINNER (Level " + lvl + ")";
+        prompt.innerText = "Translate this word into English:";
+    } else if (lvl <= 120) {
+        currentQ = l.med[(lvl - 51) % l.med.length];
+        badge.style.background = "#e6a100"; badge.innerText = "INTERMEDIATE SENTENCE (Level " + lvl + ")";
+        prompt.innerText = "Translate the full sentence into English:";
+    } else {
+        currentQ = l.hard[(lvl - 121) % l.hard.length];
+        badge.style.background = "#d9534f"; badge.innerText = "EXPERT REVERSE CHALLENGE (Level " + lvl + ")";
+        prompt.innerText = "Write the exact translation (no accents needed):";
+    }
     document.getElementById("levels-section").style.display = "none";
     document.getElementById("lesson-section").style.display = "block";
     document.getElementById("lesson-title").innerText = l.name + " — Level " + lvl + " / 200";
-    document.getElementById("lesson-word").innerText = '"' + w.q + '"';
+    document.getElementById("lesson-word").innerText = '"' + currentQ.q + '"';
     document.getElementById("user-answer").value = "";
     document.getElementById("feedback").innerText = "";
 }
 function backToLevels() { selectLanguage(selectedLang); }
+function normalize(str) {
+    return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[.,!?']/g, "").trim();
+}
 function checkAnswer() {
     const l = languages[selectedLang];
-    const w = l.words[(selectedLevel - 1) % l.words.length];
-    const ans = document.getElementById("user-answer").value.toLowerCase().trim();
+    const ans = normalize(document.getElementById("user-answer").value);
     const fb = document.getElementById("feedback");
-    if (ans === w.a) { fb.style.color = "#76b800"; fb.innerText = "Correct! Level " + selectedLevel + " completed!"; completed[l.name + "_" + selectedLevel] = true; }
-    else { fb.style.color = "#d9534f"; fb.innerText = 'Incorrect. Answer: "' + w.a + '"'; }
+    if (ans === normalize(currentQ.a)) {
+        fb.style.color = "#76b800"; fb.innerText = "Correct! Level " + selectedLevel + " mastered!";
+        completed[l.name + "_" + selectedLevel] = true;
+    } else {
+        fb.style.color = "#d9534f"; fb.innerText = 'Incorrect. Expected: "' + currentQ.a + '"';
+    }
 }
 function nextLevel() { if (selectedLevel < 200) startLevel(selectedLevel + 1); else backToLevels(); }
 function handleLogin() { alert("Welcome to Duolingo Closed Beta (2010), " + (document.getElementById("username").value || "Guest") + "!"); }
