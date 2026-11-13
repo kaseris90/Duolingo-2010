@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Duolingo - 2010 Edition</title>
     <style>
-        /* Βασικό στυλ 2010 */
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: #ffffff;
@@ -25,7 +24,6 @@
             position: relative;
         }
 
-        /* Επάνω μπάρα σύνδεσης */
         .header {
             display: flex;
             justify-content: flex-end;
@@ -58,7 +56,6 @@
             background: linear-gradient(to bottom, #9ee028 0%, #80c406 100%);
         }
 
-        /* Κύριο περιεχόμενο (Κουκουβάγια & Κείμενο) */
         .main-content {
             margin-top: 40px;
             padding-left: 20px;
@@ -93,7 +90,6 @@
             text-decoration: underline;
         }
 
-        /* Κουμπί Learn Now */
         .learn-now-wrapper {
             margin-top: 30px;
         }
@@ -104,13 +100,13 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* Ενότητα Επιλογής Γλώσσας (Κρυφή αρχικά) */
+        /* Ενότητα Επιλογής Γλώσσας (10 Γλώσσες) */
         #language-section {
             display: none;
             margin-top: 35px;
             border-top: 1px solid #eeeeee;
             padding-top: 25px;
-            padding-bottom: 50px;
+            padding-bottom: 40px;
         }
 
         #language-section h2 {
@@ -122,20 +118,19 @@
         .languages-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
-            gap: 10px;
+            gap: 12px;
         }
 
         .lang-card {
             border: 1px solid #dddddd;
             border-radius: 5px;
-            padding: 10px;
+            padding: 15px 10px;
             text-align: center;
             cursor: pointer;
             background-color: #fafafa;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: bold;
             color: #555;
-            transition: all 0.15s;
         }
 
         .lang-card:hover {
@@ -144,7 +139,58 @@
             color: #333;
         }
 
-        /* Ενότητα Μαθήματος (Κρυφή αρχικά) */
+        /* Ενότητα Επιλογής Επιπέδου (200 Επίπεδα) */
+        #levels-section {
+            display: none;
+            margin-top: 35px;
+            border-top: 1px solid #eeeeee;
+            padding-top: 25px;
+            padding-bottom: 40px;
+        }
+
+        .section-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .levels-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 8px;
+            max-height: 360px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .level-btn {
+            padding: 10px 5px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            background-color: #ffffff;
+            font-weight: bold;
+            font-size: 13px;
+            color: #4b4b4b;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .level-btn:hover {
+            border-color: #76b800;
+            background-color: #f2f9e6;
+        }
+
+        .level-btn.completed {
+            background-color: #76b800;
+            color: #ffffff;
+            border-color: #659e00;
+        }
+
+        /* Ενότητα Μαθήματος */
         #lesson-section {
             display: none;
             margin-top: 35px;
@@ -153,6 +199,7 @@
             padding: 25px;
             background-color: #fcfcfc;
             max-width: 600px;
+            margin-bottom: 40px;
         }
 
         .lesson-header {
@@ -165,8 +212,15 @@
         }
 
         .lesson-prompt {
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 17px;
+            margin-bottom: 12px;
+        }
+
+        .lesson-word {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #222;
         }
 
         .lesson-input {
@@ -185,7 +239,15 @@
             font-size: 15px;
         }
 
-        /* Υποσέλιδο 2010 */
+        .link-btn {
+            background: none;
+            border: none;
+            color: #4b75b3;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
         .footer {
             text-align: right;
             padding: 20px;
@@ -197,46 +259,38 @@
             .languages-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .levels-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Επάνω δεξιά μπάρα Login -->
     <div class="header">
         <input type="text" placeholder="Username" id="username">
         <input type="password" placeholder="Password" id="password">
-        <button class="btn-green" onclick="loginAlert()">Login</button>
+        <button type="button" class="btn-green" onclick="handleLogin()">Login</button>
     </div>
 
-    <!-- Κύριο τμήμα -->
     <div class="main-content">
         <div class="brand-row">
-            <!-- Καφέ κουκουβάγια Duo 2010 (SVG) -->
             <svg width="95" height="95" viewBox="0 0 120 120" xmlns="http://w3.org">
-                <!-- Πόδια -->
                 <path d="M45 102 L45 112 M40 112 L50 112 M45 108 L38 114 M45 108 L52 114" stroke="#8b6c4c" stroke-width="2.5" stroke-linecap="round"/>
                 <path d="M68 102 L68 112 M63 112 L73 112 M68 108 L61 114 M68 108 L75 114" stroke="#8b6c4c" stroke-width="2.5" stroke-linecap="round"/>
-                <!-- Αριστερό φτερό -->
                 <path d="M26 55 Q12 65 24 85 Q32 78 32 65 Z" fill="#8b6c4c"/>
-                <!-- Δεξί φτερό -->
                 <path d="M88 55 Q105 62 110 72 Q95 82 84 72 Z" fill="#8b6c4c"/>
-                <!-- Σώμα & Αυτιά -->
                 <path d="M28 20 L42 32 Q57 28 72 32 L86 20 Q92 55 86 85 Q80 104 57 104 Q34 104 28 85 Q22 55 28 20 Z" fill="#8b6c4c"/>
-                <!-- Μάτια (Αριστερό) -->
                 <circle cx="43" cy="52" r="13" fill="#ffffff" stroke="#8b6c4c" stroke-width="2"/>
                 <circle cx="43" cy="52" r="10.5" fill="none" stroke="#8b6c4c" stroke-width="1.5" stroke-dasharray="3,2"/>
                 <circle cx="43" cy="52" r="7.5" fill="#8b6c4c"/>
                 <text x="43" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">d</text>
-                <!-- Μάτια (Δεξί) -->
                 <circle cx="71" cy="52" r="13" fill="#ffffff" stroke="#8b6c4c" stroke-width="2"/>
                 <circle cx="71" cy="52" r="10.5" fill="none" stroke="#8b6c4c" stroke-width="1.5" stroke-dasharray="3,2"/>
                 <circle cx="71" cy="52" r="7.5" fill="#8b6c4c"/>
                 <text x="71" y="55.5" font-family="Arial" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">o</text>
-                <!-- Ράμφος (u) -->
                 <path d="M53 56 L53 63 Q57 68 61 63 L61 56" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
-                <!-- Φτερά στήθους -->
                 <path d="M40 78 Q45 84 50 78 M52 78 Q57 84 62 78 M64 78 Q69 84 74 78" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
                 <path d="M46 87 Q51 93 56 87 M58 87 Q63 93 68 87" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
             </svg>
@@ -251,41 +305,20 @@
             Follow us on Twitter (<a href="https://twitter.com" target="_blank">@duolingo</a>) for updates.
         </div>
 
-        <!-- Κουμπί Learn Now -->
         <div class="learn-now-wrapper">
-            <button class="btn-green btn-learn-now" onclick="showLanguages()">Learn Now</button>
+            <button type="button" class="btn-green btn-learn-now" onclick="openLanguages()">Learn Now</button>
         </div>
 
-        <!-- Λίστα 50 Γλωσσών -->
+        <!-- 1. Επιλογή από 10 Γλώσσες -->
         <div id="language-section">
-            <h2>Which language do you want to learn? (50 Languages)</h2>
+            <h2>Which language do you want to learn? (10 Languages)</h2>
             <div class="languages-grid" id="languages-grid"></div>
         </div>
 
-        <!-- Περιβάλλον Μαθήματος -->
-        <div id="lesson-section">
-            <div class="lesson-header">
-                <strong id="lesson-title" style="font-size: 18px; color: #76b800;">Learning Spanish</strong>
-                <button onclick="backToLanguages()" style="background:none; border:none; color:#4b75b3; cursor:pointer; text-decoration:underline;">Change language</button>
-            </div>
-            <div class="lesson-prompt" id="lesson-prompt">Translate this sentence into English:</div>
-            <div style="font-size: 20px; font-weight: bold; margin-bottom: 15px; color: #333;" id="lesson-word">"Hola, ¿cómo estás?"</div>
-            <input type="text" class="lesson-input" id="user-answer" placeholder="Type your translation here...">
-            <button class="btn-green" onclick="checkAnswer()">Check Answer</button>
-            <button class="btn-green" style="background: #888; border-color: #666; margin-left: 8px;" onclick="nextQuestion()">Next</button>
-            <div class="feedback" id="feedback"></div>
-        </div>
-    </div>
-</div>
-
-<div class="footer">
-    © 2010 Carnegie Mellon University
-</div>
-
-<script>
-    // Λίστα με 50 γλώσσες και παραδείγματα προτάσεων
-    const languagesData = [
-        { name: "Spanish", word: "Hola, ¿cómo estás?", answer: "hello how are you" },
-        { name: "French", word: "Bonjour, comment ça va ?", answer: "hello how are you" },
-        { name: "German", word: "Guten Tag, wie geht es dir?", answer: "hello how are you" },
-  
+        <!-- 2. Επιλογή από 200 Επίπεδα -->
+        <div id="levels-section">
+            <div class="section-top-bar">
+                <h2 id="levels-title" style="margin:0;">Spanish - 200 Levels</h2>
+                <button type="button" class="link-btn" onclick="openLanguages()">← Back to Languages</button>
+                    </div>
+                    
